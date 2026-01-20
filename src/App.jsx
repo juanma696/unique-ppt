@@ -14,6 +14,7 @@ import {
   Layout,
   Moon,
   Sun,
+  Github,
 } from "lucide-react";
 
 import { getTheme, LAYOUTS } from "@/constants";
@@ -484,6 +485,34 @@ export default function App() {
           {errorMsg}
         </div>
       )}
+
+      <footer className={`mt-16 text-center ${THEME.textMuted} text-sm`}>
+        <div className="flex items-center justify-center gap-4">
+          <a
+            href="https://github.com/uniqueww/unique-ppt"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center gap-1.5 hover:${THEME.accent} transition-colors`}
+          >
+            <Github size={16} />
+            GitHub
+          </a>
+          <span className={isDark ? "text-slate-700" : "text-slate-300"}>
+            |
+          </span>
+          <span>
+            Made by{" "}
+            <a
+              href="https://github.com/uniqueww"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`hover:${THEME.accent} transition-colors`}
+            >
+              uniqueww
+            </a>
+          </span>
+        </div>
+      </footer>
     </div>
   );
 
