@@ -1,8 +1,37 @@
 import { useState, useEffect } from "react";
 import { DEFAULT_API_CONFIG } from "@/constants";
 
+let SECRET_CONFIG = null;
+try {
+  SECRET_CONFIG = require("@/constants/secret").SECRET_CONFIG;
+} catch (e) {
+  // secret.js 不存在时使用默认配置
+}
+
 const STORAGE_KEY = "uniquePpt_api_config";
 const THEME_KEY = "uniquePpt_theme";
+
+const getDefaultConfig = () => {
+  if (SECRET_CONFIG) {
+    return {
+      text: {
+        provider: SECRET_CONFIG.text.provider || "openai",
+        protocol: "openai",
+        baseUrl: SECRET_CONFIG.text.baseUrl || "",
+        model: SECRET_CONFIG.text.model || "",
+        apiKey: SECRET_CONFIG.text.apiKey || "",
+      },
+      image: {
+        provider: SECRET_CONFIG.image.provider || "openai",
+        protocol: "openai_image",
+        baseUrl: SECRET_CONFIG.image.baseUrl || "",
+        model: SECRET_CONFIG.image.model || "",
+        apiKey: SECRET_CONFIG.image.apiKey || "",
+      },
+    };
+  }
+  return DEFAULT_API_CONFIG;
+};
 
 export function useTheme() {
   const [isDark, setIsDark] = useState(() => {
@@ -29,7 +58,7 @@ export function useApiConfig() {
       if (!parsed.image.protocol) parsed.image.protocol = "openai_image";
       return parsed;
     }
-    return DEFAULT_API_CONFIG;
+    return getDefaultConfig();
   });
 
   const saveConfig = (newConfig) => {

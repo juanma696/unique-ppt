@@ -27,3 +27,4 @@ npm-debug.log*
 .cache/
 .vite/
 AGENTS.md
+src/constants/secret.js
