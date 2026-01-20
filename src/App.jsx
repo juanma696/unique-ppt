@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 import { getTheme, LAYOUTS } from "@/constants";
-import { dbUtils, sleep } from "@/utils";
+import { dbUtils, sleep, concurrentLimit } from "@/utils";
 import { callTextAI, callImageAI } from "@/services";
 import {
   useApiConfig,
@@ -143,42 +143,54 @@ export default function App() {
     setStage("generating_images");
     addLog(
       "AI 画师",
-      `开始批量渲染，使用引擎: ${apiConfig.image.provider === "system" ? "Imagen" : "Custom"}`,
+      `开始并发渲染(最多5张)，使用引擎: ${apiConfig.image.provider === "system" ? "Imagen" : "Custom"}`,
       "info",
     );
-    const newSlides = [...slides];
-    for (let i = 0; i < newSlides.length; i++) {
-      if (newSlides[i].hasImage) continue;
-      setCurrentProcessIndex(i);
-      setSlides((prev) =>
-        prev.map((s, idx) => (idx === i ? { ...s, status: "generating" } : s)),
-      );
-      if (i > 0) await sleep(2000);
-      try {
-        const b64 = await callImageAI(newSlides[i].imagePrompt, apiConfig);
+
+    const slidesToGenerate = slides
+      .map((slide, index) => ({ slide, index }))
+      .filter(({ slide }) => !slide.hasImage);
+
+    if (slidesToGenerate.length === 0) {
+      setStage("preview");
+      return;
+    }
+
+    setSlides((prev) =>
+      prev.map((s) => (!s.hasImage ? { ...s, status: "generating" } : s)),
+    );
+
+    const results = await concurrentLimit(
+      slidesToGenerate,
+      async ({ slide, index }) => {
+        setCurrentProcessIndex(index);
+        const b64 = await callImageAI(slide.imagePrompt, apiConfig);
         console.log(
-          `[DEBUG] 第${i + 1}页图片生成成功，数据长度: ${b64?.length || 0}`,
+          `[DEBUG] 第${index + 1}页图片生成成功，数据长度: ${b64?.length || 0}`,
         );
-        await dbUtils.save(`slide-${newSlides[i].id}`, b64);
-        console.log(`[DEBUG] 第${i + 1}页图片已保存到IndexedDB`);
+        await dbUtils.save(`slide-${slide.id}`, b64);
+        console.log(`[DEBUG] 第${index + 1}页图片已保存到IndexedDB`);
+        return { index, slideId: slide.id };
+      },
+      5,
+    );
+
+    results.forEach((result) => {
+      if (result.status === "fulfilled") {
+        const { index, slideId } = result.value;
         setSlides((prev) =>
-          prev.map((s, idx) =>
-            idx === i ? { ...s, status: "done", hasImage: true } : s,
+          prev.map((s) =>
+            s.id === slideId ? { ...s, status: "done", hasImage: true } : s,
           ),
         );
-        addLog("AI 画师", `第 ${i + 1} 页渲染完成`, "success");
-      } catch (err) {
-        console.error(`[DEBUG] 第${i + 1}页生成失败:`, err);
-        addLog("错误", `第 ${i + 1} 页: ${err.message}`, "error");
-        setSlides((prev) =>
-          prev.map((s, idx) => (idx === i ? { ...s, status: "error" } : s)),
-        );
-        if (err.message.includes("RATE_LIMIT")) {
-          setCooldownTime(20);
-          await sleep(20000);
-        }
+        addLog("AI 画师", `第 ${index + 1} 页渲染完成`, "success");
+      } else {
+        const err = result.reason;
+        console.error(`[DEBUG] 图片生成失败:`, err);
+        addLog("错误", err.message, "error");
       }
-    }
+    });
+
     setStage("preview");
   };
 

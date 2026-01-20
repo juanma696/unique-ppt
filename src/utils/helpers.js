@@ -45,6 +45,39 @@ export async function fetchWithRetry(
   }
 }
 
+/**
+ * 并发控制器 - 限制同时执行的 Promise 数量
+ * @param {Array} items - 待处理的项目数组
+ * @param {Function} fn - 处理函数 (item, index) => Promise
+ * @param {number} concurrency - 最大并发数
+ * @returns {Promise<Array>} - 所有结果 (包含 {status, value/reason})
+ */
+export const concurrentLimit = async (items, fn, concurrency = 5) => {
+  const results = new Array(items.length);
+  let currentIndex = 0;
+
+  const worker = async () => {
+    while (currentIndex < items.length) {
+      const index = currentIndex++;
+      try {
+        results[index] = {
+          status: "fulfilled",
+          value: await fn(items[index], index),
+        };
+      } catch (error) {
+        results[index] = { status: "rejected", reason: error };
+      }
+    }
+  };
+
+  const workers = Array(Math.min(concurrency, items.length))
+    .fill(null)
+    .map(() => worker());
+
+  await Promise.all(workers);
+  return results;
+};
+
 export const urlToBase64 = async (url) => {
   try {
     const response = await fetch(url);
