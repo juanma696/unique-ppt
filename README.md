@@ -7,6 +7,19 @@
 
 **AI 驱动的图文并茂 PPT 生成器** — 输入主题或文本，AI 自动生成大纲，并为每一页智能生成匹配内容的精美配图。
 
+---
+
+## 📸 预览
+
+<p align="center">
+  <img src="assets/home.png" alt="首页" width="45%" />
+  <img src="assets/settings.png" alt="设置" width="45%" />
+</p>
+
+<p align="center">
+  <img src="assets/editor.png" alt="编辑器" width="45%" />
+  <img src="assets/generation.png" alt="生成页面" width="45%" />
+</p>
 
 ---
 
@@ -19,6 +32,7 @@
 | 🍱 **多种排版** | 封面、左右分割、磨砂玻璃、极简等多种精美布局     |
 | 📄 **一键导出** | 标准 PPTX 格式，兼容 Office 与 Keynote           |
 | 🌗 **深色模式** | 完美支持深色/浅色主题切换                        |
+| ⚡ **并发生成** | 最多 5 张图片同时生成，速度提升 3-5 倍           |
 
 ---
 
